@@ -3,11 +3,13 @@ const math = require("mathjs");
 const arrCalendar = (arr) => {
     let table = []
     let header = [[['Subject', 'Start Date', 'Start Time', 'End Date', 'End Time', 'Description', 'Location']]]
-
+    let firstWeek = "2023-9-4"
     let i = 1
     while (i != arr.length) {
-
-        let startDate = handleStartDate(arr[i][1].split(','))
+        let day = convertDayToNum(arr[i][0].split(',')[0])
+        let startDate = handleStartDate(arr[i][1].split(',')).map(item => weekToDate(item, day, firstWeek))
+        // console.log(convertDayToNum(arr[i][0].split(',')[0]))
+        // let startDate = handleStartDate(arr[i][1].split(','))
         let subject = Array(startDate.length).fill(arr[i][7])
         let startTime = Array(startDate.length).fill(handleTime(arr[i][0].split(',')[1], 0))
         let endDate = startDate
@@ -16,17 +18,13 @@ const arrCalendar = (arr) => {
         let loc = Array(startDate.length).fill(arr[i][2])
         i = i + 1
         let row = [subject, startDate, startTime, endDate, endTime, des, loc]
-        // console.log(startDate)
-        // console.log()
         if (startDate.length != 0) {
             table.push(row)
         }
     }
 
     let result = header.concat(table.map(item => [].concat(math.transpose(item))))
-
     return result.flat()
-
 }
 
 const handleStartDate = (arr) => {
@@ -49,7 +47,8 @@ const generateRange = (string) => {
 const handleTime = (strTime, i) => {
     let output = ""
     try {
-        output = strTime.split('-').map(item => item.replace('h', ':').trim())[i]
+        tempOut = strTime.split('-').map(item => item.replace('h', ':').trim())[i]
+        output = tempOut.split(':')[0] + ':' + tempOut.split(':')[1].padEnd(2, "0")
     }
     catch {
         output = ""
@@ -57,5 +56,18 @@ const handleTime = (strTime, i) => {
     return output
 }
 
+const weekToDate = (weeks, day, firstWeek) => {
+    let result = new Date(firstWeek)
+    result.setDate(result.getDate() + (parseInt(weeks) - 1) * 7 + (parseInt(day) - 2))
+    return `${result.getDate()}/${result.getMonth() + 1}/${result.getFullYear()}`
+}
+
+const convertDayToNum = (str) => {
+    arrDay = str.match(/\d+/g)
+    if (arrDay) {
+        return str.match(/\d+/g)[0]
+    }
+    return 1
+}
 
 module.exports = arrCalendar
