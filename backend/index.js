@@ -1,21 +1,16 @@
-const express = require('express')
-const puppeteer = require('puppeteer')
-const crawData = require('./controllers/crawData')
-const arrCalendar = require('./controllers/convertToCalendarTemplate')
-const arrToCSV = require('./controllers/arrToCSV')
-const fs = require('fs')
-const app = express()
+import express from 'express'
+import crawData from './utils/crawData.js'
+import schedule from './controllers/schedule.controller.js'
+import dotenv from 'dotenv'
+import cors from 'cors'
 
-require("dotenv").config()
+const app = express()
+dotenv.config()
 const PORT = process.env.PORT || 5000
 
-app.get('/', (req, res) => {
-    (async () => {
-        const content = await crawData()
-        const arrData = await arrCalendar(content)
-        const exportToCSV = await arrToCSV(arrData, 'output.csv')
-        await res.send(arrData)
-    })()
-})
+app.use(cors())
+app.get('/html-table', schedule.htmlTable)
+app.get('/csv-template', schedule.csvTemplate)
+app.get('/event-calendar', schedule.eventCalendar)
 
 app.listen(PORT)
