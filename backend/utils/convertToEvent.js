@@ -1,5 +1,6 @@
 const convertToEvent = (csvData) => {
     const events = []
+
     for (let i = 1; i < csvData.length; i++) {
         const event = {}
         event["title"] = csvData[i][0]

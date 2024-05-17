@@ -7,4 +7,4 @@ const arrToCSV = (arr, filePath) => {
     fs.writeFileSync(filePath, csvString, 'utf-8');
 }
 
-module.exports = arrToCSV
+export default exportCsv

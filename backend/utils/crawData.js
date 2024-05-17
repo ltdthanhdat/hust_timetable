@@ -2,11 +2,11 @@ import puppeteer from 'puppeteer'
 import dotenv from 'dotenv'
 dotenv.config()
 
-const crawData = async () => {
+const crawData = async (aspNetCookies) => {
     const browser = await puppeteer.launch({ headless: true })
     const cookies = {
         name: ".AspNet.Cookies",
-        value: process.env.cookiesCTT,
+        value: aspNetCookies,
         domain: "dt-ctt.hust.edu.vn"
     }
     const page = await browser.newPage()
