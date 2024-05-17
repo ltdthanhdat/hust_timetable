@@ -1,24 +1,67 @@
-// import Table from "./components/Table"
+import axios from 'axios'
+import { useForm } from 'react-hook-form'
 import MyCalendar from './components/Calendar'
-import { useState } from 'react';
+import { useState, useEffect } from 'react'
+import './index.css'
+
 function App() {
+  const [events, setEvents] = useState([{}])
+  const [x, setX] = useState({}) // x: cookie for submit
+  const { register, handleSubmit } = useForm()
+  const onSubmit = async (data) => {
+    console.log(data)
+    setX(data)
+    await fetchData(data)
+  }
+  const fetchData = async (cookie) => {
+    try {
+      const data = await axios.post('http://localhost:3000/event-calendar', cookie)
+      setEvents(data.data)
+    }
+    catch (err) {
+      console.log(err)
+    }
+  }
+  const exportCsv = async () => {
+    try {
+      const data = await axios.post('http://localhost:3000/export-to-csv', x)
+    }
+    catch (err) {
+      console.log(err)
+    }
+  }
 
   return (
     <>
-      {/* <div className="row"> */}
-      <div className="">
-        <p>
-          B1: Get cookies from dt-ctt.sis.hust.edu.vn <br />
-          B2: Fill cookies in form down below <br />
-          B3: Export calendar <br />
-        </p>
-      </div>
+      <div className='row'>
 
-      <div className="">
-        <h1>My Calendar App</h1>
-        <MyCalendar />
-      </div>
-      {/* </div> */}
+        <div className="col-3">
+          <p className='ms-2 mt-1'>
+            How to use? <br />
+            B1: Get cookies from <a href='https://dt-ctt.hust.edu.vn/Students/Timetables.aspx' target='_blank'>dt-ctt.hust.edu.vn</a> <br />
+            B2: Fill cookies in form down below <br />
+            B3: Export calendar <br />
+          </p>
+          <hr className='ms-2' />
+          <form onSubmit={handleSubmit(onSubmit)}>
+            <div className='ms-2'>
+              <label htmlFor='cookie'>.AspNet.Cookies	</label>
+            </div>
+            <div className='ms-2'>
+              <textarea rows='5' id='cookie' type="text" className='form-control' {...register('aspNetCookies')} />
+            </div>
+            <button className='m-2 btn btn-primary' type='submit'>Submit</button>
+          </form>
+        </div >
+
+        <div className="col-9">
+          <button className='btn btn-primary my-1' onClick={exportCsv}>Export to CSV</button>
+
+          <div className="me-2">
+            <MyCalendar events={events} />
+          </div>
+        </div>
+      </div >
     </>
   )
 }
