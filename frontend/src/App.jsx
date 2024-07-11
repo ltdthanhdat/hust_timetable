@@ -4,6 +4,8 @@ import MyCalendar from './components/Calendar'
 import { useState, useEffect } from 'react'
 import './index.css'
 
+const BACKEND_URI = import.meta.env.VITE_BACKEND_URI
+
 function App() {
   const [events, setEvents] = useState([{}])
   const [x, setX] = useState({}) // x: cookie for submit
@@ -15,7 +17,9 @@ function App() {
   }
   const fetchData = async (cookie) => {
     try {
-      const data = await axios.post('http://localhost:3000/event-calendar', cookie)
+      console.log(BACKEND_URI)
+      const data = await axios.post(BACKEND_URI + '/event-calendar', cookie)
+
       setEvents(data.data)
     }
     catch (err) {
@@ -24,7 +28,7 @@ function App() {
   }
   const exportCsv = async () => {
     try {
-      const data = await axios.post('http://localhost:3000/export-to-csv', x)
+      const data = await axios.post(BACKEND_URI + '/export-to-csv', x)
     }
     catch (err) {
       console.log(err)
