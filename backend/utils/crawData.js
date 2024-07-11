@@ -11,7 +11,6 @@ const crawData = async (aspNetCookies) => {
     }
     const page = await browser.newPage()
     await page.setCookie(cookies)
-    // await page.goto('https://dt-ctt.hust.edu.vn/Students/Timetables.aspx', { waitUntil: 'networkidle2' })
     await page.goto('https://dt-ctt.hust.edu.vn/Students/Timetables.aspx')
     const table = getHtmlTable(page)
     return table
