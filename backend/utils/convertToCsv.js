@@ -3,13 +3,17 @@ import { transpose } from "mathjs"
 const csvTemplate = (arr) => {
     let table = []
     let header = [[['Subject', 'Start Date', 'Start Time', 'End Date', 'End Time', 'Description', 'Location']]]
-    let firstWeek = "2023-9-4"
+    let firstWeek = "2024-9-2"
     let i = 1
     while (i != arr.length) {
         let day = convertDayToNum(arr[i][0].split(',')[0])
         let startDate = handleStartDate(arr[i][1].split(',')).map(item => weekToDate(item, day, firstWeek))
         let subject = Array(startDate.length).fill(arr[i][7])
         let startTime = Array(startDate.length).fill(handleTime(arr[i][0].split(',')[1], 0))
+        // let startTime = handleTime(arr[i][0].split(',')[1], 0)
+        // console.log(arr[i][0].split(',')[1])
+        // console.log(startTime)
+        // console.log(startTime.split('h').join(':'))
         let endDate = startDate
         let endTime = Array(startDate.length).fill(handleTime(arr[i][0].split(',')[1], 1))
         let des = Array(startDate.length).fill(arr[i][8] + "|" + arr[i][5])
@@ -41,18 +45,20 @@ const generateRange = (string) => {
     }
     return result
 }
-
-const handleTime = (strTime, i) => {
+// 15h5 - 17h30
+const handleTime = (strTime, isEnd) => {
     let output = ""
     let tempOut = ""
     try {
-        tempOut = strTime.split('-').map(item => item.replace('h', ':').trim())[i]
-        output = tempOut.split(':')[0] + ':' + tempOut.split(':')[1].padEnd(2, "0")
+        tempOut = strTime.split('-').map(item => item.replace('h', ':').trim())[isEnd]
+        output = tempOut.split(':')[0] + ':' + tempOut.split(':')[1].padStart(2, "0")
+        return output
     }
     catch {
-        output = ""
+        // output = ""
+        return ''
     }
-    return output
+    // return output
 }
 
 const weekToDate = (weeks, day, firstWeek) => {
