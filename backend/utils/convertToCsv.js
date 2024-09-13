@@ -1,32 +1,35 @@
 import { transpose } from "mathjs"
-
 const csvTemplate = (arr) => {
-    let table = []
-    let header = [[['Subject', 'Start Date', 'Start Time', 'End Date', 'End Time', 'Description', 'Location']]]
-    let firstWeek = "2024-9-2"
-    let i = 1
-    while (i != arr.length) {
-        let day = convertDayToNum(arr[i][0].split(',')[0])
-        let startDate = handleStartDate(arr[i][1].split(',')).map(item => weekToDate(item, day, firstWeek))
-        let subject = Array(startDate.length).fill(arr[i][7])
-        let startTime = Array(startDate.length).fill(handleTime(arr[i][0].split(',')[1], 0))
-        // let startTime = handleTime(arr[i][0].split(',')[1], 0)
-        // console.log(arr[i][0].split(',')[1])
-        // console.log(startTime)
-        // console.log(startTime.split('h').join(':'))
-        let endDate = startDate
-        let endTime = Array(startDate.length).fill(handleTime(arr[i][0].split(',')[1], 1))
-        let des = Array(startDate.length).fill(arr[i][8] + "|" + arr[i][5])
-        let loc = Array(startDate.length).fill(arr[i][2])
-        i = i + 1
-        let row = [subject, startDate, startTime, endDate, endTime, des, loc]
-        if (startDate.length != 0) {
-            table.push(row)
-        }
+    if (!arr[0]) {
+        return ''
     }
+    else {
+        let table = []
+        let header = [[['Subject', 'Start Date', 'Start Time', 'End Date', 'End Time', 'Description', 'Location']]]
+        let firstWeek = "2024-9-2"
+        let i = 1
+        while (i != arr.length) {
+            let day = convertDayToNum(arr[i][0].split(',')[0])
+            let startDate = handleStartDate(arr[i][1].split(',')).map(item => weekToDate(item, day, firstWeek))
+            let subject = Array(startDate.length).fill(`"${arr[i][7]}"`)
+            let startTime = Array(startDate.length).fill(handleTime(arr[i][0].split(',')[1], 0))
+            let endDate = startDate
+            let endTime = Array(startDate.length).fill(handleTime(arr[i][0].split(',')[1], 1))
+            let des = Array(startDate.length).fill(`"${arr[i][8] + " " + arr[i][5]}"`)
+            console.log(0, arr[i])
+            console.log(1, arr[i][8])
+            console.log(2, arr[i][5])
+            let loc = Array(startDate.length).fill(`"${arr[i][2]}"`)
+            i = i + 1
+            let row = [subject, startDate, startTime, endDate, endTime, des, loc]
+            if (startDate.length != 0) {
+                table.push(row)
+            }
+        }
 
-    let result = header.concat(table.map(item => [].concat(transpose(item))))
-    return result.flat()
+        let result = header.concat(table.map(item => [].concat(transpose(item))))
+        return result.flat()
+    }
 }
 
 const handleStartDate = (arr) => {

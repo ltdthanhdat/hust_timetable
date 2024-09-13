@@ -19,7 +19,6 @@ function App() {
     try {
       console.log(BACKEND_URI)
       const data = await axios.post(BACKEND_URI + '/event-calendar', cookie)
-
       setEvents(data.data)
     }
     catch (err) {
@@ -27,12 +26,20 @@ function App() {
     }
   }
   const exportCsv = async () => {
-    try {
-      const data = await axios.post(BACKEND_URI + '/export-to-csv', x)
-    }
-    catch (err) {
-      console.log(err)
-    }
+    axios.get(BACKEND_URI + '/download', {
+      responseType: 'blob'
+    })
+      .then((obj) => {
+        const url = URL.createObjectURL(obj.data)
+        const a = document.createElement('a')
+        a.href = url
+        a.download = 'test.csv'
+        a.style.display = 'none'
+        a.click()
+        a.remove()
+        URL.revokeObjectURL(url)
+      })
+      .catch(err => console.log(err))
   }
 
   return (

@@ -18,13 +18,14 @@ const crawData = async (aspNetCookies) => {
 
 const getHtmlTable = async (page) => {
     let table = []
-    // handle header
-    const headerHtml = await page.$(`#ctl00_ctl00_contentPane_MainPanel_MainContent_gvStudentRegister_DXHeadersRow0`)
-    const header = await page.evaluate(element => element.innerText, headerHtml)
-    table.push(header.split("\n\t\n").map(item => item.replace(/^\s+|\s+$/gm, '')))
 
-    // handle data
     try {
+        // handle header
+        const headerHtml = await page.$(`#ctl00_ctl00_contentPane_MainPanel_MainContent_gvStudentRegister_DXHeadersRow0`)
+        const header = await page.evaluate(element => element.innerText, headerHtml)
+        table.push(header.split("\n\t\n").map(item => item.replace(/^\s+|\s+$/gm, '')))
+
+        // handle data
         let i = 0
         while (true) {
             const elementWithId = await page.$(`#ctl00_ctl00_contentPane_MainPanel_MainContent_gvStudentRegister_DXDataRow${i}`)
