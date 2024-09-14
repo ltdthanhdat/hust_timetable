@@ -26,6 +26,7 @@ function App() {
     }
   }
   const exportCsv = async () => {
+    await axios.post(BACKEND_URI + '/export-to-csv', x)
     axios.get(BACKEND_URI + '/download', {
       responseType: 'blob'
     })
