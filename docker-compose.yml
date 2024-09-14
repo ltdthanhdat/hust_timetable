@@ -1,14 +1,14 @@
-version: '3'
+version: '3.7'
 
 services:
   frontend:
-    image: c597423b1a98
+    image: ltdthanhdat/hcfe:lastest
     build: .
     ports:
       - 5173:5173
     restart: always
   backend:
-    image: 496e868cb615
+    image: ltdthanhdat/hcbe:lastest
     build: .
     ports:
       - 3000:3000
