@@ -1,4 +1,18 @@
 # Hust-Calendar
+
+## Yêu cầu
+- Docker
+
+## Cài đặt
+1. Clone repo 
+```bash
+git clone https://github.com/ltdthanhdat/hust-timetable.git
+```
+2. Run docker compose
+```bash
+docker compose up
+```
+
 ## Cách sử dụng
 - **Bước 1:** Truy cập https://dt-ctt.hust.edu.vn/Students/Timetables.aspx
 - **Bước 2:** Inspect chọn tab network, mục Timetable.aspx và copy value của .AspNet.Cookies	
