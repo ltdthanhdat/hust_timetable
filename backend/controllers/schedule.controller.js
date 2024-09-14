@@ -22,13 +22,16 @@ const eventCalendar = async (req, res) => {
 const exportCsv = async (req, res) => {
 	const rawData = await crawData(req.body.aspNetCookies.trim())
 	const data = convertToCsv(rawData)
-	console.log(data)
+	// console.log(data)
 	if (data == '') {
+		fs.writeFileSync("output.csv", '', 'utf-8');
 		res.send('no data')
 	}
-	const csvString = data.map(row => row.join(',')).join('\n');
-	fs.writeFileSync("output.csv", csvString, 'utf-8');
-	res.send("ok")
+	else {
+		const csvString = data.map(row => row.join(',')).join('\n');
+		fs.writeFileSync("output.csv", csvString, 'utf-8');
+		res.send("ok")
+	}
 }
 
 //export default { htmlTable, eventCalendar, csvTemplate, exportCsv }
