@@ -20,13 +20,13 @@ function App() {
       console.log(BACKEND_URI)
       const data = await axios.post(BACKEND_URI + '/event-calendar', cookie)
       setEvents(data.data)
+      await axios.post(BACKEND_URI + '/export-to-csv', x)
     }
     catch (err) {
       console.log(err)
     }
   }
   const exportCsv = async () => {
-    await axios.post(BACKEND_URI + '/export-to-csv', x)
     axios.get(BACKEND_URI + '/download', {
       responseType: 'blob'
     })
