@@ -10,8 +10,8 @@ const PORT = process.env.PORT || 5000
 
 app.use(cors())
 app.use(express.json())
-app.post('/html-table', schedule.htmlTable)
-app.post('/csv-template', schedule.csvTemplate)
+//app.post('/html-table', schedule.htmlTable)
+//app.post('/csv-template', schedule.csvTemplate)
 app.post('/event-calendar', schedule.eventCalendar)
 app.post('/export-to-csv', schedule.exportCsv)
 app.get('/download', downloadFile)

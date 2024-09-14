@@ -2,13 +2,13 @@ version: '3'
 
 services:
   frontend:
-    image: af1205224676
+    image: da9d2bf3a469
     build: .
     ports:
       - 5173:5173
     restart: always
   backend:
-    image: cef5deda0834
+    image: 4215af604ec9
     build: .
     ports:
       - 3000:3000
