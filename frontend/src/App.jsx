@@ -20,7 +20,8 @@ function App() {
       console.log(BACKEND_URI)
       const data = await axios.post(BACKEND_URI + '/event-calendar', cookie)
       setEvents(data.data)
-      await axios.post(BACKEND_URI + '/export-to-csv', x)
+      // await axios.post(BACKEND_URI + '/export-to-csv', x)
+      await axios.post(BACKEND_URI + '/export-to-csv', cookie)
     }
     catch (err) {
       console.log(err)
