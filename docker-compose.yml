@@ -1,0 +1,15 @@
+version: '3'
+
+services:
+  frontend:
+    image: af1205224676
+    build: .
+    ports:
+      - 5173:5173
+    restart: always
+  backend:
+    image: cef5deda0834
+    build: .
+    ports:
+      - 3000:3000
+    restart: always

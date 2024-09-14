@@ -16,9 +16,6 @@ const csvTemplate = (arr) => {
             let endDate = startDate
             let endTime = Array(startDate.length).fill(handleTime(arr[i][0].split(',')[1], 1))
             let des = Array(startDate.length).fill(`"${arr[i][8] + " " + arr[i][5]}"`)
-            console.log(0, arr[i])
-            console.log(1, arr[i][8])
-            console.log(2, arr[i][5])
             let loc = Array(startDate.length).fill(`"${arr[i][2]}"`)
             i = i + 1
             let row = [subject, startDate, startTime, endDate, endTime, des, loc]

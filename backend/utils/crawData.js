@@ -3,7 +3,15 @@ import dotenv from 'dotenv'
 dotenv.config()
 
 const crawData = async (aspNetCookies) => {
-    const browser = await puppeteer.launch({ headless: true })
+    const browser = await puppeteer.launch({
+        headless: true,
+        executablePath: '/usr/bin/chromium-browser',
+        args: [
+            '--headless',
+            '--no-sandbox',
+            '--disable-gpu'
+        ],
+    })
     const cookies = {
         name: ".AspNet.Cookies",
         value: aspNetCookies,
