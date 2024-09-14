@@ -5,7 +5,7 @@ dotenv.config()
 const crawData = async (aspNetCookies) => {
     const browser = await puppeteer.launch({
         headless: true,
-        // executablePath: '/usr/bin/chromium-browser',
+        executablePath: '/usr/bin/chromium-browser',
         args: [
             '--headless',
             '--no-sandbox',
