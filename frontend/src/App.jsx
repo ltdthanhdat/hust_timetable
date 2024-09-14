@@ -8,23 +8,24 @@ const BACKEND_URI = import.meta.env.VITE_BACKEND_URI
 
 function App() {
 	const [events, setEvents] = useState([{}])
-	//const [x, setX] = useState({}) // x: cookie for submit
+	const [loading, setLoading] = useState(false)
 	const { register, handleSubmit } = useForm()
 	const onSubmit = async (data) => {
 		console.log(data)
-		//setX(data)
 		await fetchData(data)
 	}
 	const fetchData = async (cookie) => {
 		try {
-			console.log(BACKEND_URI)
+			setLoading(true)
+			await axios.post(BACKEND_URI + '/export-to-csv', cookie)
 			const data = await axios.post(BACKEND_URI + '/event-calendar', cookie)
 			setEvents(data.data)
-			// await axios.post(BACKEND_URI + '/export-to-csv', x)
-			await axios.post(BACKEND_URI + '/export-to-csv', cookie)
 		}
 		catch (err) {
 			console.log(err)
+		}
+		finally {
+			setLoading(false)
 		}
 	}
 	const exportCsv = async () => {
@@ -35,7 +36,7 @@ function App() {
 				const url = URL.createObjectURL(obj.data)
 				const a = document.createElement('a')
 				a.href = url
-				a.download = 'test.csv'
+				a.download = 'schedule.csv'
 				a.style.display = 'none'
 				a.click()
 				a.remove()
@@ -69,7 +70,7 @@ function App() {
 
 				<div className="col-9">
 					<button className='btn btn-primary my-1' onClick={exportCsv}>Export to CSV</button>
-
+					{loading && <span className="loader"></span>}
 					<div className="me-2">
 						<MyCalendar events={events} />
 					</div>
