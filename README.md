@@ -8,6 +8,7 @@
 1. Clone repo hoặc copy file docker-compose.yml
 ```bash
 git clone https://github.com/ltdthanhdat/hust-timetable.git
+cd hust-timetable
 ```
 2. Run docker compose
 ```bash
