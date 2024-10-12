@@ -2,6 +2,7 @@
 
 ## Yêu cầu
 - Docker
+- Docker compose
 
 ## Cài đặt
 1. Clone repo hoặc copy file docker-compose.yml
