@@ -13,6 +13,8 @@ git clone https://github.com/ltdthanhdat/hust_timetable.git && cd hust_timetable
 ```bash
 docker compose up
 ```
+3. Truy cập
+[localhost:5173](https://localhost:5173)
 
 ## Cách sử dụng
 1. Truy cập https://dt-ctt.hust.edu.vn/Students/Timetables.aspx
